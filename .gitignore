@@ -1,0 +1,153 @@
+ 
+ #include <LiquidCrystal.h>  
+   
+   
+ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);  
+             
+                    
+              const int lampadaQuarto = 40;
+              const int tomadaVentilador = 41;     //  A ONDA LA DAS VARIAVEIS E PORTAS.
+              const int carregadorPC = 42;
+                    boolean botaoApertado = false;
+   
+                             void setup()   
+ {  
+
+   lcd.begin (16,2);
+  lcd.setCursor (2,0);
+  lcd.print ("Carregando");                // EXIBE NA TELA ESSA ONDA AI, NAS POSIÇÕES DECLARADAS
+  lcd.setCursor (3,1);
+  lcd.print ("Software...");
+ 
+   delay (3000);
+   
+  lcd.begin (16,2);
+  lcd.setCursor (2,0);
+  lcd.print ("Bem vindo ao");          // EXIBE NA TELA ESSA ONDA AI, NAS POSIÇÕES DECLARADAS
+  lcd.setCursor (3,1);
+  lcd.print ("AUTO-NOMOS");
+    
+  delay (2000);
+  
+  lcd.begin (16,2);
+  lcd.setCursor (0,0);
+  lcd.print ("AUTO-NOMO ONLINE.");          // EXIBE NA TELA ESSA ONDA AI, NAS POSIÇÕES DECLARADAS
+  lcd.setCursor (0,1);
+  lcd.print ("31C05/12/1319:12");
+        
+                          pinMode (lampadaQuarto, OUTPUT);
+                          pinMode (tomadaVentilador, OUTPUT);          //DETERMINA O MODO QUE O PINO VAI ATUAR. ISSO NAO TEM NADA A VER A LOGICA DA TELA.
+                          pinMode (carregadorPC, OUTPUT);
+  
+  Serial.begin (9600);     // ABRI A PORTA SERIAL.
+ }  
+
+          void loop()    {
+            
+                          int botao;
+                          botao = analogRead (0);
+                          int teste;
+                          char entrada = Serial.read();
+  
+
+  botao = analogRead(0);        // É ALOCADA NESSA VARIAVEL O VALOR DETERMINADO DA ENTRADA.
+
+
+                
+                  lcd.setCursor(0,1);   
+                  */ NOS ifs a baixo eu quis montar algo do tipo, tudo vai estar desligado, 
+                  ai quando eu der a entrada que o pulso for liberado na saida e acionar la oque eu quizer ele vai exibir na tela.
+                  blz. mas depois pensei que ia da errado e realmente deu, eu preciso que o texto a exibir na tela quando eu der a entrada
+                  pecisa ser armazenada numa variavel e essa varial ser chamada na hora que for exibir dentros dos  ifs, tu entendeu?*/
+                   
+                          if (botao <= 100){  //<100 é a seta pra direita.
+                              lcd.begin(16,2);
+                              lcd.setCursor (0,0);
+                              lcd.print ("STATUS AMBIENTE.");                  
+                              lcd.setCursor (0,1);
+                              lcd.print ("Lampada OFF");
+                              Serial.println ("Lampada OFF. ");
+                              
+                           }
+
+                   
+                   
+                   
+                  else if (botao <= 200) { //(botao <= 200) se no lugar do botao <200 eu quizer botar o <400 que o botao para baixo? mesmo usando ele em outra função, se eu botar dois ifs com <400 ele vai para o ultimo if, mas quero que ele va um if de cada vez com o mesmo valor, tem que usar um contador?
+                           
+                     lcd.begin(16,2);
+                             lcd.setCursor (0,0);
+                             lcd.print ("STATUS AMBIENTE.");
+                             lcd.setCursor (0,1);
+                             lcd.print ("Ventilador OFF. ");
+                             Serial.println ("Ventilador OFF. "); 
+                         }  
+                   
+                  else if (botao <= 400) {
+                         lcd.begin(16,2);
+                             lcd.setCursor (0,0);
+                             lcd.print ("STATUS AMBIENTE.");
+                             lcd.setCursor (0,1);
+                             lcd.print ("Carregador OFF. ");
+                             Serial.println ("Carregador OFF. "); 
+                 }
+                 
+                 
+                   else if (botao <= 600) {
+                             
+                            lcd.setCursor (0,0);     
+                            lcd.begin (16,2);
+                            lcd.setCursor (0,0);
+                            lcd.print ("AUTO-NOMO ONLINE.");         
+                            lcd.setCursor (0,1);
+                            lcd.print ("31C05/12/1319:12");
+  
+            }
+  
+  
+  
+           if (entrada == '2'){
+              digitalWrite (lampadaQuarto, HIGH);
+              lcd.print ("Lampada ON.     "); 
+              Serial.println ("Lampada ON.     ");
+           }
+           else if (entrada == '3'){
+              digitalWrite (lampadaQuarto, LOW);
+              lcd.print ("Lampada OFF.     "); 
+              Serial.println ("Lampada OFF.     "); 
+          }
+          else if (entrada == '4'){
+              digitalWrite (tomadaVentilador, HIGH);
+              lcd.print ("Ventilador ON.  "); 
+              Serial.println ("Ventilador ON.   ");
+          }
+          else if (entrada == '5'){
+              digitalWrite (tomadaVentilador, LOW);
+              lcd.print ("Ventilador OFF.  ");
+              Serial.println ("Ventilador OFF.  "); 
+          }
+          else if (entrada == '6'){
+              digitalWrite (carregadorPC, HIGH);
+              lcd.print ("Carregador ON.  "); 
+              Serial.println ("Carregador ON.  "); 
+          }
+          else if (entrada == '7'){
+              digitalWrite (carregadorPC, LOW);
+              lcd.print ("Carregador OFF.  "); 
+              Serial.println ("Carregador OFF.  ");
+          }
+    
+
+ }
+ 
+ 
+
+   
+
+
+
+ 
+ 
+  
+
+  
